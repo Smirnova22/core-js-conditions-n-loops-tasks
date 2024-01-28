@@ -308,7 +308,7 @@ function getSpiralMatrix(size) {
     }
   }
 
-  while (true) {
+  do {
     for (let i = left; i <= right; i += 1) {
       matrix[top][i] = value;
       value += 1;
@@ -332,9 +332,7 @@ function getSpiralMatrix(size) {
       value += 1;
     }
     left += 1;
-
-    if (top > bottom || left > right) break;
-  }
+  } while (top <= bottom && left <= right);
 
   return matrix;
 }
