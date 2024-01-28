@@ -110,8 +110,32 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const romanNumerals = [
+    { value: 1000, numeral: 'M' },
+    { value: 900, numeral: 'CM' },
+    { value: 500, numeral: 'D' },
+    { value: 400, numeral: 'CD' },
+    { value: 100, numeral: 'C' },
+    { value: 90, numeral: 'XC' },
+    { value: 50, numeral: 'L' },
+    { value: 40, numeral: 'XL' },
+    { value: 10, numeral: 'X' },
+    { value: 9, numeral: 'IX' },
+    { value: 5, numeral: 'V' },
+    { value: 4, numeral: 'IV' },
+    { value: 1, numeral: 'I' },
+  ];
+
+  let romanNumeral = '';
+  let tempNum = num;
+  for (let i = 0; i < romanNumerals.length; i += 1) {
+    while (tempNum >= romanNumerals[i].value) {
+      romanNumeral += romanNumerals[i].numeral;
+      tempNum -= romanNumerals[i].value;
+    }
+  }
+  return romanNumeral;
 }
 
 /**
@@ -129,6 +153,7 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
+
 function convertNumberToString(/* numberStr */) {
   throw new Error('Not implemented');
 }
@@ -222,8 +247,29 @@ function isContainNumber(num, digit) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  const n = arr.length;
+  let leftSum = 0;
+  let rightSum = 0;
+
+  for (let i = 0; i < n; i += 1) {
+    for (let j = 0; j < i; j += 1) {
+      leftSum += arr[j];
+    }
+
+    for (let k = i + 1; k < n; k += 1) {
+      rightSum += arr[k];
+    }
+
+    if (leftSum === rightSum) {
+      return i;
+    }
+
+    leftSum = 0;
+    rightSum = 0;
+  }
+
+  return -1;
 }
 
 /**
@@ -247,8 +293,50 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = [];
+  let value = 1;
+  let top = 0;
+  let bottom = size - 1;
+  let left = 0;
+  let right = size - 1;
+
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = [];
+    for (let j = 0; j < size; j += 1) {
+      matrix[i][j] = 0;
+    }
+  }
+
+  while (true) {
+    for (let i = left; i <= right; i += 1) {
+      matrix[top][i] = value;
+      value += 1;
+    }
+    top += 1;
+
+    for (let i = top; i <= bottom; i += 1) {
+      matrix[i][right] = value;
+      value += 1;
+    }
+    right -= 1;
+
+    for (let i = right; i >= left; i -= 1) {
+      matrix[bottom][i] = value;
+      value += 1;
+    }
+    bottom -= 1;
+
+    for (let i = bottom; i >= top; i -= 1) {
+      matrix[i][left] = value;
+      value += 1;
+    }
+    left += 1;
+
+    if (top > bottom || left > right) break;
+  }
+
+  return matrix;
 }
 
 /**
