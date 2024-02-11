@@ -154,8 +154,80 @@ function convertToRomanNumerals(num) {
  *  '1950.2'  => 'one nine five zero point two'
  */
 
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+  let isNegative = false;
+  let tempNumberStr = numberStr;
+
+  function removeFirstChar(str) {
+    let newStr = '';
+    for (let i = 1; i < str.length; i += 1) {
+      newStr += str[i];
+    }
+    return newStr;
+  }
+
+  if (tempNumberStr[0] === '-') {
+    isNegative = true;
+    tempNumberStr = removeFirstChar(tempNumberStr);
+  }
+
+  for (let i = 0; i < tempNumberStr.length; i += 1) {
+    const char = tempNumberStr[i];
+    if (char >= '0' && char <= '9') {
+      switch (char) {
+        case '0':
+          result += 'zero ';
+          break;
+        case '1':
+          result += 'one ';
+          break;
+        case '2':
+          result += 'two ';
+          break;
+        case '3':
+          result += 'three ';
+          break;
+        case '4':
+          result += 'four ';
+          break;
+        case '5':
+          result += 'five ';
+          break;
+        case '6':
+          result += 'six ';
+          break;
+        case '7':
+          result += 'seven ';
+          break;
+        case '8':
+          result += 'eight ';
+          break;
+        case '9':
+          result += 'nine ';
+          break;
+        default:
+          break;
+      }
+    } else if (char === '.' || char === ',') {
+      result += 'point ';
+    }
+  }
+
+  if (isNegative) {
+    result = `minus ${result}`;
+  }
+  let len = result.length;
+  while (len > 0 && result[len - 1] === ' ') {
+    len -= 1;
+  }
+  let finalResult = '';
+  for (let i = 0; i < len; i += 1) {
+    finalResult += result[i];
+  }
+  result = finalResult;
+
+  return result;
 }
 
 /**
